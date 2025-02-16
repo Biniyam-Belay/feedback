@@ -1,10 +1,18 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import userRoutes from './routes/userRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import feedbackRoutes from './routes/feedbackRoutes.js';
 
 const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
+
+//Routes
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/feedbacks', feedbackRoutes);
 
 const PORT = process.env.PORT || 5000;
 
