@@ -5,7 +5,7 @@ export const getUsers = async (req, res) => {
     try {
         const users = await prisma.user.findMany();
         res.json(users);
-    } catch (errr) {
+    } catch (err) {
         res.status(500).json({ error: "Error fetching users" });
     }
 };

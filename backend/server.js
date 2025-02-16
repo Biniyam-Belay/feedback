@@ -1,19 +1,19 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import feedbackRoutes from './routes/feedbackRoutes.js';
 import authRoutes from './routes/authRoutes.js';
-import { protect } from './middleware/authMiddleware.js';
+import dotenv from 'dotenv';
+import prisma from './lib/prisma.js';
 
-const prisma = new PrismaClient();
+dotenv.config();
+
 const app = express();
-
 app.use(express.json());
 
 //Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/users', protect, userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/feedbacks', feedbackRoutes);
 
