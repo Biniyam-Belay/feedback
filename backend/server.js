@@ -3,6 +3,8 @@ import { PrismaClient } from '@prisma/client';
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import feedbackRoutes from './routes/feedbackRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import { protect } from './middleware/authMiddleware.js';
 
 const prisma = new PrismaClient();
 const app = express();
@@ -10,7 +12,8 @@ const app = express();
 app.use(express.json());
 
 //Routes
-app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', protect, userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/feedbacks', feedbackRoutes);
 
