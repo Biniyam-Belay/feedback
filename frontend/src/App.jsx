@@ -1,11 +1,16 @@
-function App() {
-  return (
-    <>
-      <h1 className="bg-red-500 text-white p-5 text-xl">
-        Hello World!
-      </h1>
-    </>
-  )
-}
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 
-export default App
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="Register.jsx" element={<Register />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
