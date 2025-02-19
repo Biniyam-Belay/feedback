@@ -19,6 +19,8 @@ model User {
   name String
   email String @unique
   password String @default("")
+  googleID String?
+  githubId String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   feedback Feedback[]

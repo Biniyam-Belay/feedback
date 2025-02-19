@@ -60,6 +60,12 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
 
+        if (!user.password) {
+            return res.status(400).json({
+                error: 'Account created with social login. Please use social authentication.'
+            });
+        }
+
         // Compare passwords
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {

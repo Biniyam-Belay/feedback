@@ -9,10 +9,12 @@ import authRoutes from './routes/authRoutes.js';
 import dotenv from 'dotenv';
 import prisma from './lib/prisma.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
+import { configurePassport } from './controllers/passportStrategies.js';
 
 dotenv.config();
 
 const app = express();
+// configurePassport()
 app.use(express.json());
 
 // Security and logging middleware
