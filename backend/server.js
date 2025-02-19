@@ -1,15 +1,24 @@
 import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import morgan from 'morgan';
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import feedbackRoutes from './routes/feedbackRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import dotenv from 'dotenv';
 import prisma from './lib/prisma.js';
+import { errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+// Security and logging middleware
+app.use(helmet());
+app.use(cors());
+app.use(morgan('tiny'));
 
 //Routes
 app.use('/api/auth', authRoutes);
@@ -54,6 +63,9 @@ app.post('/feedbacks', async (req, res) => {
         res.status(500).json({error: "Error creating feedback"}); //Handle Errors
     }
 })
+
+// Use centralized error handler
+app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

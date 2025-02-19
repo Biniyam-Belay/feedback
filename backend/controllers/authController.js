@@ -70,13 +70,32 @@ const loginUser = async (req, res) => {
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
+        const refreshToken = jwt.sign({userId: user.id}, process.env.JWT_REFRESH_SECRET, {
+            expiresIn: '7d'
+        })
 
         // Return success response
-        res.status(200).json({ token });
+        res.status(200).json({ token: refreshToken });
     } catch (error) {
         console.error('Error logging in:', error);
         res.status(500).json({ error: 'Error logging in' });
     }
 };
 
-export { registerUser, loginUser };
+const refreshTokenHandler = (req, res) => {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+        return res.status(401).json({error: 'refresh token required'});
+    }
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+        const newToken = jwt.sign({userId: decoded.userId}, process.env.JWT_SECRET, {
+            expiresIn: '1h'
+        });
+        return res.status(200).json({token, newToken})
+    } catch {
+        return res.status(401).json({error: 'Invalid refresh token'})
+    }
+};
+
+export { registerUser, loginUser, refreshTokenHandler };

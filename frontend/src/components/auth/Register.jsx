@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,7 +12,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,7 +24,7 @@ const Register = () => {
 
       if (response.ok) {
         // Optionally redirect or show success message
-        window.location.href = '/login'; // Redirect to login page after registration
+        navigate('/login'); // Redirect to login page after registration
       } else {
         setError(data.message);
       }
