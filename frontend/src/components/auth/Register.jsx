@@ -34,11 +34,12 @@ const Register = () => {
 
       if (response.ok) {
         localStorage.setItem('token', data.token); // Store JWT Token
-        navigate('/Home'); // Redirect to home page
+        navigate('http://localhost:5000/api/auth/Home'); // Redirect to home page
       } else {
         setError(data.message || 'Registration failed');
       }
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       setError('Something went wrong, please try again.');
     }
   };
@@ -145,7 +146,7 @@ const Register = () => {
           <img 
             src={datapic} 
             alt="Data visualization" 
-            className="h-full w-full object-cover object-left-top transform scale-105 hover:scale-100 transition-transform duration-1000" 
+            className="h-full w-full object-cover object-left-top transform scale-105 hover:scale-100 transition-transform duration-1000 pointer-events-none select-none" 
           />
         </div>
       </div>

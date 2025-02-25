@@ -39,7 +39,8 @@ const Login = () => {
       } else {
         setError(data.message || 'Login failed');
       }
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       setError('Something went wrong, please try again.');
     }
   };
@@ -154,7 +155,7 @@ const Login = () => {
             {/* Sign Up Redirect */}
             <div className="flex items-center justify-center">
               <p className="text-white">
-                Don't have an account?{' '}
+                Don&apos:t have an account?{' '}
                 <span
                   className="text-blue-500 underline hover:cursor-pointer"
                   onClick={handleSignUpRedirect}
@@ -173,7 +174,7 @@ const Login = () => {
           <img 
             src={datapic} 
             alt="Data visualization" 
-            className="h-full w-full object-cover object-left-top transform scale-105 hover:scale-100 transition-transform duration-1000" 
+            className="h-full w-full object-cover object-left-top transform scale-105 hover:scale-100 transition-transform duration-1000 pointer-events-none select-none" 
           />
         </div>
       </div>
